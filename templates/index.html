@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>GENESIS AI — Invention Studio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header class="topbar"><a class="brand" href="/"><span class="logo">G</span><span><strong>GENESIS AI</strong><small>Budget-Aware Invention Studio</small></span></a>
+        <nav><a href="#studio">Studio</a><a href="#presets">Samples</a><a href="#saved">Saved <b id="saved-count">0</b></a></nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="eyebrow">LOCAL ENGINE · NO API KEY · STRICT BUDGET</div>
+            <h1>Turn real-world problems into <span>affordable prototypes.</span></h1>
+            <p>Describe a problem, enter your budget, and get a category-matched concept with an itemised estimate, build steps, blueprint and honest limitations.</p>
+            <div class="principles">
+                <div><b>01</b><strong>Understand</strong><small>Match the problem</small></div>
+                <div><b>02</b><strong>Design</strong><small>Choose a mechanism</small></div>
+                <div><b>03</b><strong>Calculate</strong><small>Item-by-item costs</small></div>
+                <div><b>04</b><strong>Validate</strong><small>Never exceed budget</small></div>
+            </div>
+        </section>
+        <section id="presets" class="panel">
+            <div class="section-head">
+                <div>
+                    <div class="eyebrow">QUICK START</div>
+                    <h2>6 different sample problems</h2>
+                </div>
+                <p>Each sample starts with a different suggested budget. You can edit it or enter any budget yourself.</p>
+            </div>
+            <div class="preset-grid">{% for p in presets %}<button class="preset" data-title="{{p.title}}" data-description="{{p.description}}" data-category="{{p.category}}" data-budget="{{p.budget}}"><strong>{{p.title}}</strong><small>{{p.description}}</small><span class="preset-budget">Suggested budget: ₹{{p.budget}}</span><em>Load sample →</em></button>{% endfor
+                %}
+            </div>
+        </section>
+        <section id="studio" class="panel">
+            <div class="section-head">
+                <div>
+                    <div class="eyebrow">STEP 01 · DEFINE</div>
+                    <h2>Invention formulation</h2>
+                </div><span class="pill">Strict budget validation</span></div>
+            <form id="formulation-form">
+                <div class="field"><label for="title">Problem title *</label><input id="title" required minlength="3" placeholder="e.g. Classroom lights left on"></div>
+                <div class="field"><label for="description">Problem description *</label><textarea id="description" required minlength="8" rows="3" placeholder="What happens, why does it happen, and who is affected?"></textarea></div>
+                <div class="form-row">
+                    <div class="field"><label for="budget">Your exact budget (₹) *</label><input id="budget" type="number" min="1" max="1000000" step="1" required placeholder="Enter your budget"><small>You choose the budget: ₹1 to ₹10,00,000. Samples do not set it for you.</small></div>
+                    <div class="field"><label for="category">Automatically detected category</label><input id="category" value="Detected after you enter the problem" readonly><small>Category is inferred from the title and description; you do not need to choose it.</small></div>
+                </div><button class="primary" type="submit" id="generate-btn">Formulate invention concept <span>→</span></button>
+                <div id="form-error" class="error" role="alert"></div>
+            </form>
+        </section>
+        <section id="results" class="results hidden" aria-live="polite"></section>
+        <section id="saved" class="panel">
+            <div class="section-head">
+                <div>
+                    <div class="eyebrow">LOCAL BROWSER STORAGE</div>
+                    <h2>Saved invention projects</h2>
+                </div><button id="clear-saved" class="secondary">Clear saved</button></div>
+            <p class="muted">Saved concepts stay in this browser on this device; they are not uploaded to an online account.</p>
+            <div id="saved-list" class="saved-list"></div>
+        </section>
+        <footer><strong>GENESIS AI</strong><span>Transparent rule-based prototype studio · No cloud AI · No API key · Illustrative prices</span></footer>
+    </main>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+
+</html>
